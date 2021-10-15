@@ -1,3 +1,16 @@
-# SeniorDesign - ADEPT
+SENIOR DESIGN PROJECT CLASS OF FALL '21
+GROUP C
+PROJECT NAME: ADEPT
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+- Firmware ver. 1.1
+- last edit: 10/15/2021
 
-Firmware ver. 0
+Last updates:
+	Nucleo_LCD (branch): LCD Menu display & potentiometer code.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+In order to load the project the STM32CubeIDE, simply drag and drop the .project file into your ide.
+
+
+
+
