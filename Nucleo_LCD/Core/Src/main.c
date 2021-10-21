@@ -41,10 +41,8 @@
 
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
-
-TIM_HandleTypeDef htim2;
-
-UART_HandleTypeDef huart2;
+ADC_HandleTypeDef hadc2;
+ADC_HandleTypeDef hadc3;
 
 /* USER CODE BEGIN PV */
 
@@ -53,17 +51,20 @@ UART_HandleTypeDef huart2;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-static void MX_USART2_UART_Init(void);
 static void MX_ADC1_Init(void);
-static void MX_TIM2_Init(void);
+static void MX_ADC2_Init(void);
+static void MX_ADC3_Init(void);
 /* USER CODE BEGIN PFP */
+void lcd_startup();
+void update_lcd();
+void get_pot_params();
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-uint16_t scaledValuePA, scaledValuePB, scaledValuePC;
-uint16_t potValues[3];
+uint32_t scaledValuePA, scaledValuePB, scaledValuePC;
+uint32_t potValues[3];
 
 /* USER CODE END 0 */
 
@@ -95,24 +96,17 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_USART2_UART_Init();
   MX_ADC1_Init();
-  MX_TIM2_Init();
+  MX_ADC2_Init();
+  MX_ADC3_Init();
   /* USER CODE BEGIN 2 */
 
-  lcd16x2_init_4bits(URS_GPIO_Port, URS_Pin, UE_Pin, UD4_GPIO_Port, UD4_Pin, UD5_Pin, UD6_Pin, UD7_Pin);
-  lcd16x2_setCursor(0, 0);
-  lcd16x2_cursorShow(0);
-  HAL_Delay(500);
-  HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-
-  HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-  lcd16x2_clear();
-  lcd16x2_printf("     ADEPT");
-  HAL_Delay(1500);
-  lcd16x2_clear();
-  lcd16x2_setCursor(1, 0);
-  lcd16x2_printf("    FX System");
+  // Startup animation and initialization for LCD
+  lcd_startup();
+  // Start all 3 onboard ADCs
+  HAL_ADC_Start(&hadc1);
+  HAL_ADC_Start(&hadc2);
+  HAL_ADC_Start(&hadc3);
   HAL_Delay(1500);
 
   /* USER CODE END 2 */
@@ -121,17 +115,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  // Poll ADC1 for PotA
-	  // start ADC1
-	  HAL_ADC_Start(&hadc1);
-	  HAL_ADC_PollForConversion(&hadc1, 1000);
-	  potValues[0] = HAL_ADC_GetValue(&hadc1);
-	  // Store value reading for PotA
-	  // scale value between 0 and 99
-	  scaledValuePA = potValues[0] * 0.0247821;
-	  if(scaledValuePA > 99) {
-		  scaledValuePA = 99;
-	  }
+	  get_pot_params();
 
 	  //Display Effect 1 Screen
 	  lcd16x2_1stLine();
@@ -140,9 +124,12 @@ int main(void)
 	  //lcd16x2_printf(" A:00 B:00 C:00 ");
 	  //lcd16x2_printf("Value1 = %.1f", 123.45))
 	  lcd16x2_printf(" A:");
-	  lcd16x2_printf("%d", scaledValuePA);
-	  lcd16x2_printf(" B:0");
-	  lcd16x2_printf(" C:0");
+	  lcd16x2_printf("%02d", scaledValuePA);
+	  lcd16x2_printf(" B:");
+	  lcd16x2_printf("%02d", scaledValuePB);
+	  lcd16x2_printf(" C:");
+	  lcd16x2_printf("%02d", scaledValuePC);
+	  //lcd16x2_printf("%d", scaledValuePC);
 	  //updateLCD();
 
     /* USER CODE END WHILE */
@@ -236,7 +223,7 @@ static void MX_ADC1_Init(void)
   */
   sConfig.Channel = ADC_CHANNEL_0;
   sConfig.Rank = 1;
-  sConfig.SamplingTime = ADC_SAMPLETIME_3CYCLES;
+  sConfig.SamplingTime = ADC_SAMPLETIME_84CYCLES;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
@@ -248,84 +235,102 @@ static void MX_ADC1_Init(void)
 }
 
 /**
-  * @brief TIM2 Initialization Function
+  * @brief ADC2 Initialization Function
   * @param None
   * @retval None
   */
-static void MX_TIM2_Init(void)
+static void MX_ADC2_Init(void)
 {
 
-  /* USER CODE BEGIN TIM2_Init 0 */
+  /* USER CODE BEGIN ADC2_Init 0 */
 
-  /* USER CODE END TIM2_Init 0 */
+  /* USER CODE END ADC2_Init 0 */
 
-  TIM_Encoder_InitTypeDef sConfig = {0};
-  TIM_MasterConfigTypeDef sMasterConfig = {0};
+  ADC_ChannelConfTypeDef sConfig = {0};
 
-  /* USER CODE BEGIN TIM2_Init 1 */
+  /* USER CODE BEGIN ADC2_Init 1 */
 
-  /* USER CODE END TIM2_Init 1 */
-  htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 0;
-  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 4294967295;
-  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  sConfig.EncoderMode = TIM_ENCODERMODE_TI1;
-  sConfig.IC1Polarity = TIM_ICPOLARITY_RISING;
-  sConfig.IC1Selection = TIM_ICSELECTION_DIRECTTI;
-  sConfig.IC1Prescaler = TIM_ICPSC_DIV1;
-  sConfig.IC1Filter = 0;
-  sConfig.IC2Polarity = TIM_ICPOLARITY_RISING;
-  sConfig.IC2Selection = TIM_ICSELECTION_DIRECTTI;
-  sConfig.IC2Prescaler = TIM_ICPSC_DIV1;
-  sConfig.IC2Filter = 0;
-  if (HAL_TIM_Encoder_Init(&htim2, &sConfig) != HAL_OK)
+  /* USER CODE END ADC2_Init 1 */
+  /** Configure the global features of the ADC (Clock, Resolution, Data Alignment and number of conversion)
+  */
+  hadc2.Instance = ADC2;
+  hadc2.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV4;
+  hadc2.Init.Resolution = ADC_RESOLUTION_12B;
+  hadc2.Init.ScanConvMode = DISABLE;
+  hadc2.Init.ContinuousConvMode = ENABLE;
+  hadc2.Init.DiscontinuousConvMode = DISABLE;
+  hadc2.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
+  hadc2.Init.ExternalTrigConv = ADC_SOFTWARE_START;
+  hadc2.Init.DataAlign = ADC_DATAALIGN_RIGHT;
+  hadc2.Init.NbrOfConversion = 1;
+  hadc2.Init.DMAContinuousRequests = DISABLE;
+  hadc2.Init.EOCSelection = ADC_EOC_SEQ_CONV;
+  if (HAL_ADC_Init(&hadc2) != HAL_OK)
   {
     Error_Handler();
   }
-  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
-  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
+  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
+  */
+  sConfig.Channel = ADC_CHANNEL_1;
+  sConfig.Rank = 1;
+  sConfig.SamplingTime = ADC_SAMPLETIME_84CYCLES;
+  if (HAL_ADC_ConfigChannel(&hadc2, &sConfig) != HAL_OK)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN TIM2_Init 2 */
+  /* USER CODE BEGIN ADC2_Init 2 */
 
-  /* USER CODE END TIM2_Init 2 */
+  /* USER CODE END ADC2_Init 2 */
 
 }
 
 /**
-  * @brief USART2 Initialization Function
+  * @brief ADC3 Initialization Function
   * @param None
   * @retval None
   */
-static void MX_USART2_UART_Init(void)
+static void MX_ADC3_Init(void)
 {
 
-  /* USER CODE BEGIN USART2_Init 0 */
+  /* USER CODE BEGIN ADC3_Init 0 */
 
-  /* USER CODE END USART2_Init 0 */
+  /* USER CODE END ADC3_Init 0 */
 
-  /* USER CODE BEGIN USART2_Init 1 */
+  ADC_ChannelConfTypeDef sConfig = {0};
 
-  /* USER CODE END USART2_Init 1 */
-  huart2.Instance = USART2;
-  huart2.Init.BaudRate = 115200;
-  huart2.Init.WordLength = UART_WORDLENGTH_8B;
-  huart2.Init.StopBits = UART_STOPBITS_1;
-  huart2.Init.Parity = UART_PARITY_NONE;
-  huart2.Init.Mode = UART_MODE_TX_RX;
-  huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-  huart2.Init.OverSampling = UART_OVERSAMPLING_16;
-  if (HAL_UART_Init(&huart2) != HAL_OK)
+  /* USER CODE BEGIN ADC3_Init 1 */
+
+  /* USER CODE END ADC3_Init 1 */
+  /** Configure the global features of the ADC (Clock, Resolution, Data Alignment and number of conversion)
+  */
+  hadc3.Instance = ADC3;
+  hadc3.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV4;
+  hadc3.Init.Resolution = ADC_RESOLUTION_12B;
+  hadc3.Init.ScanConvMode = DISABLE;
+  hadc3.Init.ContinuousConvMode = ENABLE;
+  hadc3.Init.DiscontinuousConvMode = DISABLE;
+  hadc3.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
+  hadc3.Init.ExternalTrigConv = ADC_SOFTWARE_START;
+  hadc3.Init.DataAlign = ADC_DATAALIGN_RIGHT;
+  hadc3.Init.NbrOfConversion = 1;
+  hadc3.Init.DMAContinuousRequests = DISABLE;
+  hadc3.Init.EOCSelection = ADC_EOC_SEQ_CONV;
+  if (HAL_ADC_Init(&hadc3) != HAL_OK)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN USART2_Init 2 */
+  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
+  */
+  sConfig.Channel = ADC_CHANNEL_13;
+  sConfig.Rank = 1;
+  sConfig.SamplingTime = ADC_SAMPLETIME_84CYCLES;
+  if (HAL_ADC_ConfigChannel(&hadc3, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN ADC3_Init 2 */
 
-  /* USER CODE END USART2_Init 2 */
+  /* USER CODE END ADC3_Init 2 */
 
 }
 
@@ -384,28 +389,68 @@ static void MX_GPIO_Init(void)
 // USER HELPER FUNCTIONS
 // UPDATE LCD
 
-void updateLCD() {
-	int stateCounter = 0;
-	// check for updates of user input
-	switch(stateCounter) {
-	case 0:
-		//Display Effect 1 Screen
-		lcd16x2_1stLine();
-		lcd16x2_printf("  Distortion");
-		lcd16x2_2ndLine();
-		lcd16x2_printf(" A:00 B:00 C:00 ");
+//void updateLCD() {
+//	int stateCounter = 0;
+//	// check for updates of user input
+//	switch(stateCounter) {
+//	case 0:
+//		//Display Effect 1 Screen
+//		lcd16x2_1stLine();
+//		lcd16x2_printf("  Distortion");
+//		lcd16x2_2ndLine();
+//		lcd16x2_printf(" A:00 B:00 C:00 ");
+//
+//	case 1:
+//		//Display Effect 2 Screen
+//	case 2:
+//		//Display Effect 3 Screen
+//	case 3:
+//		break;
+//		//Display Effect 4 Screen
+//	}
+//}
+////
 
-	case 1:
-		//Display Effect 1 Screen
-	case 2:
-		//Display Effect 1 Screen
-	case 3:
-		break;
-		//Display Effect 1 Screen
+void lcd_startup() {
+
+	lcd16x2_init_4bits(URS_GPIO_Port, URS_Pin, UE_Pin, UD4_GPIO_Port, UD4_Pin, UD5_Pin, UD6_Pin, UD7_Pin);
+	lcd16x2_setCursor(0, 0);
+	lcd16x2_cursorShow(0);
+	HAL_Delay(500);
+	lcd16x2_clear();
+	lcd16x2_printf("     ADEPT");
+	HAL_Delay(1500);
+	lcd16x2_clear();
+	lcd16x2_setCursor(1, 0);
+	lcd16x2_printf("    FX System");
+}
+
+void get_pot_params() {
+
+	// Poll ADC1 for PotA
+	HAL_ADC_PollForConversion(&hadc1, 1000);
+	// Store value reading for PotA
+	potValues[0] = HAL_ADC_GetValue(&hadc1);
+	// scale value between 0 and 99
+	scaledValuePA = potValues[0] * 0.0247821;
+	if(scaledValuePA > 99) {
+		scaledValuePA = 99;
+	}
+
+	HAL_ADC_PollForConversion(&hadc2, 1000);
+	potValues[1] = HAL_ADC_GetValue(&hadc2);
+	scaledValuePB = potValues[1] * 0.0247821;
+	if(scaledValuePB > 99) {
+		scaledValuePB = 99;
+	}
+
+	HAL_ADC_PollForConversion(&hadc3, 1000);
+	potValues[2] = HAL_ADC_GetValue(&hadc3);
+	scaledValuePC = potValues[2] * 0.0247821;
+	if(scaledValuePC > 99) {
+		scaledValuePC = 99;
 	}
 }
-//
-
 
 /* USER CODE END 4 */
 
