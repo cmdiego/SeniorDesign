@@ -72,6 +72,8 @@ void Error_Handler(void);
 #define UD6_GPIO_Port GPIOA
 #define UE_Pin GPIO_PIN_10
 #define UE_GPIO_Port GPIOB
+#define ENCODER_C_Pin GPIO_PIN_9
+#define ENCODER_C_GPIO_Port GPIOC
 #define UD4_Pin GPIO_PIN_8
 #define UD4_GPIO_Port GPIOA
 #define UD5_Pin GPIO_PIN_9
@@ -86,6 +88,10 @@ void Error_Handler(void);
 #define URW_GPIO_Port GPIOB
 #define URS_Pin GPIO_PIN_5
 #define URS_GPIO_Port GPIOB
+#define ENCODER_A_Pin GPIO_PIN_8
+#define ENCODER_A_GPIO_Port GPIOB
+#define ENCODER_B_Pin GPIO_PIN_9
+#define ENCODER_B_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

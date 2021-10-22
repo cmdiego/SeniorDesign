@@ -23,6 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "lcd16x2.h"
+#include <stdbool.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -44,6 +45,8 @@ ADC_HandleTypeDef hadc1;
 ADC_HandleTypeDef hadc2;
 ADC_HandleTypeDef hadc3;
 
+TIM_HandleTypeDef htim2;
+
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -54,17 +57,35 @@ static void MX_GPIO_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_ADC2_Init(void);
 static void MX_ADC3_Init(void);
+static void MX_TIM2_Init(void);
 /* USER CODE BEGIN PFP */
-void lcd_startup();
-void update_lcd();
-void get_pot_params();
-
+void Lcd_Start_Up();
+void Update_Lcd();
+void Get_Pot_Params();
+void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim);
+void Update_Position();
+void Update_Encoder_State(int16_t currentState);
+void Display_Effect(char * name);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
+// LCD VARS
 uint32_t scaledValuePA, scaledValuePB, scaledValuePC;
+
+// POTS VARS
 uint32_t potValues[3];
+
+// ENCODER VARS
+uint32_t counter = 0;
+int16_t count = 0;
+int16_t state = 0;
+int16_t position = 0;
+
+// Important variables
+int NUM_EFFECTS = 2;
+_Bool clear_flag = false;
 
 /* USER CODE END 0 */
 
@@ -99,10 +120,13 @@ int main(void)
   MX_ADC1_Init();
   MX_ADC2_Init();
   MX_ADC3_Init();
+  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
+  // ENCODER INTERRUPT
+  HAL_TIM_Encoder_Start_IT(&htim2, TIM_CHANNEL_ALL);
 
-  // Startup animation and initialization for LCD
-  lcd_startup();
+  // LCD STARTUP
+  Lcd_Start_Up();
   // Start all 3 onboard ADCs
   HAL_ADC_Start(&hadc1);
   HAL_ADC_Start(&hadc2);
@@ -115,27 +139,18 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  get_pot_params();
+	  Get_Pot_Params();
 
-	  //Display Effect 1 Screen
-	  lcd16x2_1stLine();
-	  lcd16x2_printf("  Distortion");
-	  lcd16x2_2ndLine();
-	  //lcd16x2_printf(" A:00 B:00 C:00 ");
-	  //lcd16x2_printf("Value1 = %.1f", 123.45))
-	  lcd16x2_printf(" A:");
-	  lcd16x2_printf("%02d", scaledValuePA);
-	  lcd16x2_printf(" B:");
-	  lcd16x2_printf("%02d", scaledValuePB);
-	  lcd16x2_printf(" C:");
-	  lcd16x2_printf("%02d", scaledValuePC);
-	  //lcd16x2_printf("%d", scaledValuePC);
-	  //updateLCD();
+	  if (clear_flag)
+		  lcd16x2_clear();
+
+	  Update_Lcd();
 
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
   }
+
   /* USER CODE END 3 */
 }
 
@@ -335,6 +350,55 @@ static void MX_ADC3_Init(void)
 }
 
 /**
+  * @brief TIM2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM2_Init(void)
+{
+
+  /* USER CODE BEGIN TIM2_Init 0 */
+
+  /* USER CODE END TIM2_Init 0 */
+
+  TIM_Encoder_InitTypeDef sConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM2_Init 1 */
+
+  /* USER CODE END TIM2_Init 1 */
+  htim2.Instance = TIM2;
+  htim2.Init.Prescaler = 0;
+  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim2.Init.Period = 4294967295;
+  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  sConfig.EncoderMode = TIM_ENCODERMODE_TI12;
+  sConfig.IC1Polarity = TIM_ICPOLARITY_FALLING;
+  sConfig.IC1Selection = TIM_ICSELECTION_DIRECTTI;
+  sConfig.IC1Prescaler = TIM_ICPSC_DIV1;
+  sConfig.IC1Filter = 0;
+  sConfig.IC2Polarity = TIM_ICPOLARITY_FALLING;
+  sConfig.IC2Selection = TIM_ICSELECTION_DIRECTTI;
+  sConfig.IC2Prescaler = TIM_ICPSC_DIV1;
+  sConfig.IC2Filter = 0;
+  if (HAL_TIM_Encoder_Init(&htim2, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM2_Init 2 */
+
+  /* USER CODE END TIM2_Init 2 */
+
+}
+
+/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -383,35 +447,56 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
+  /*Configure GPIO pin : ENCODER_C_Pin */
+  GPIO_InitStruct.Pin = ENCODER_C_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(ENCODER_C_GPIO_Port, &GPIO_InitStruct);
+
 }
 
 /* USER CODE BEGIN 4 */
-// USER HELPER FUNCTIONS
-// UPDATE LCD
 
-//void updateLCD() {
-//	int stateCounter = 0;
-//	// check for updates of user input
-//	switch(stateCounter) {
-//	case 0:
-//		//Display Effect 1 Screen
-//		lcd16x2_1stLine();
-//		lcd16x2_printf("  Distortion");
-//		lcd16x2_2ndLine();
-//		lcd16x2_printf(" A:00 B:00 C:00 ");
-//
-//	case 1:
-//		//Display Effect 2 Screen
-//	case 2:
-//		//Display Effect 3 Screen
-//	case 3:
-//		break;
-//		//Display Effect 4 Screen
-//	}
-//}
-////
+void Update_Lcd() {
+	clear_flag = false;
+	// check for updates of user input
+	switch(position) {
+	case 0:
+		//Display Effect 1 Screen
+		// lcd16x2_1stLine();
+		// lcd16x2_printf("  Distortion");
+		Display_Effect("Distortion");
+		break;
+	case 1:
+		//Display Effect 2 Screen
+		// lcd16x2_1stLine();
+		// lcd16x2_printf("  Delay");
+		Display_Effect("Delay");
+		break;
+	}
+//  lcd16x2_2ndLine();
+//  lcd16x2_printf(" A:");
+//  lcd16x2_printf("%02d", scaledValuePA);
+//  lcd16x2_printf(" B:");
+//  lcd16x2_printf("%02d", scaledValuePB);
+//  lcd16x2_printf(" C:");
+//  lcd16x2_printf("%02d", scaledValuePC);
+}
 
-void lcd_startup() {
+void Display_Effect(char * name)
+{
+	lcd16x2_1stLine();
+	lcd16x2_printf("  %s", name);
+	lcd16x2_2ndLine();
+	lcd16x2_printf(" A:");
+	lcd16x2_printf("%02d", scaledValuePA);
+	lcd16x2_printf(" B:");
+	lcd16x2_printf("%02d", scaledValuePB);
+	lcd16x2_printf(" C:");
+	lcd16x2_printf("%02d", scaledValuePC);
+}
+
+void Lcd_Start_Up() {
 
 	lcd16x2_init_4bits(URS_GPIO_Port, URS_Pin, UE_Pin, UD4_GPIO_Port, UD4_Pin, UD5_Pin, UD6_Pin, UD7_Pin);
 	lcd16x2_setCursor(0, 0);
@@ -425,7 +510,7 @@ void lcd_startup() {
 	lcd16x2_printf("    FX System");
 }
 
-void get_pot_params() {
+void Get_Pot_Params() {
 
 	// Poll ADC1 for PotA
 	HAL_ADC_PollForConversion(&hadc1, 1000);
@@ -450,6 +535,46 @@ void get_pot_params() {
 	if(scaledValuePC > 99) {
 		scaledValuePC = 99;
 	}
+}
+
+void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
+{
+	counter = __HAL_TIM_GET_COUNTER(htim);
+	count = (int16_t)counter;
+	count /= 4;
+	Update_Encoder_State(count);
+
+}
+
+void Update_Encoder_State(int16_t currentState)
+{
+	// Case 1: currentState > lastState, we moved one to right (down)
+	if (currentState > state)
+	{
+		// Update position
+		position++;
+		Update_Position();
+		clear_flag = true;
+		// Update state
+		state = currentState;
+	}
+	// Case 2: currentState < lastState, we moved to the left (up)
+	else if (currentState < state)
+	{
+		position--;
+		Update_Position();
+		clear_flag = true;
+		// Update state
+		state = currentState;
+	}
+}
+
+void Update_Position()
+{
+	if (position < 0)
+		position = 0;
+
+	position %= NUM_EFFECTS;
 }
 
 /* USER CODE END 4 */

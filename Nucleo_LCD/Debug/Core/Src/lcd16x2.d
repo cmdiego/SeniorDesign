@@ -1,6 +1,4 @@
-Core/Src/lcd16x2.o: \
- C:/Code/SD2/STM32-Tutorials-master/Tutorial\ 11\ -\ LCD16x2/lcd16x2.c \
- C:/Code/SD2/STM32-Tutorials-master/Tutorial\ 11\ -\ LCD16x2/lcd16x2.h \
+Core/Src/lcd16x2.o: ../Core/Src/lcd16x2.c ../Core/Inc/lcd16x2.h \
  ../Core/Inc/main.h ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
@@ -29,9 +27,11 @@ Core/Src/lcd16x2.o: \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
+ ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
+ ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Core/Inc/lcd16x2.h
 
-C:/Code/SD2/STM32-Tutorials-master/Tutorial\ 11\ -\ LCD16x2/lcd16x2.h:
+../Core/Inc/lcd16x2.h:
 
 ../Core/Inc/main.h:
 
@@ -90,5 +90,9 @@ C:/Code/SD2/STM32-Tutorials-master/Tutorial\ 11\ -\ LCD16x2/lcd16x2.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h:
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h:
+
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h:
+
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
 
 ../Core/Inc/lcd16x2.h:
