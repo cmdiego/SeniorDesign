@@ -6,6 +6,7 @@ PROJECT NAME: ADEPT
 - last edit: 10/15/2021
 
 Last updates:
+	
 	- Added I2S Project containing I2S DMA for the CODEC
 	
 	- Using brute-force method to store data and pass it to the CODEC
