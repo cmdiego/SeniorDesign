@@ -1,0 +1,222 @@
+21:35:51 **** Incremental Build of configuration Debug for project Nucleo_LCD ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ -o "Nucleo_LCD.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\diego\Desktop\SeniorDesign\SeniorDesign\Nucleo_LCD\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Nucleo_LCD.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Nucleo_LCD.elf
+ 
+arm-none-eabi-size   Nucleo_LCD.elf 
+arm-none-eabi-objdump -h -S  Nucleo_LCD.elf  > "Nucleo_LCD.list"
+arm-none-eabi-objcopy  -O binary  Nucleo_LCD.elf  "Nucleo_LCD.bin"
+   text	   data	    bss	    dec	    hex	filename
+  18236	    128	   1952	  20316	   4f5c	Nucleo_LCD.elf
+Finished building: default.size.stdout
+ 
+Finished building: Nucleo_LCD.bin
+ 
+Finished building: Nucleo_LCD.list
+ 
+21:36:06 **** Incremental Build of configuration Debug for project Nucleo_LCD ****
+make -j8 all 
+arm-none-eabi-size   Nucleo_LCD.elf 
+   text	   data	    bss	    dec	    hex	filename
+  18236	    128	   1952	  20316	   4f5c	Nucleo_LCD.elf
+Finished building: default.size.stdout
+ 
+21:41:09 **** Incremental Build of configuration Debug for project Nucleo_LCD ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ -o "Nucleo_LCD.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\diego\Desktop\SeniorDesign\SeniorDesign\Nucleo_LCD\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Nucleo_LCD.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Nucleo_LCD.elf
+ 
+arm-none-eabi-size   Nucleo_LCD.elf 
+arm-none-eabi-objdump -h -S  Nucleo_LCD.elf  > "Nucleo_LCD.list"
+arm-none-eabi-objcopy  -O binary  Nucleo_LCD.elf  "Nucleo_LCD.bin"
+   text	   data	    bss	    dec	    hex	filename
+  18112	    128	   1952	  20192	   4ee0	Nucleo_LCD.elf
+Finished building: default.size.stdout
+ 
+Finished building: Nucleo_LCD.bin
+ 
+Finished building: Nucleo_LCD.list
+ 
+21:42:58 **** Incremental Build of configuration Debug for project Nucleo_LCD ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ -o "Nucleo_LCD.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\diego\Desktop\SeniorDesign\SeniorDesign\Nucleo_LCD\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Nucleo_LCD.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Nucleo_LCD.elf
+ 
+arm-none-eabi-size   Nucleo_LCD.elf 
+arm-none-eabi-objdump -h -S  Nucleo_LCD.elf  > "Nucleo_LCD.list"
+arm-none-eabi-objcopy  -O binary  Nucleo_LCD.elf  "Nucleo_LCD.bin"
+   text	   data	    bss	    dec	    hex	filename
+  18112	    128	   1952	  20192	   4ee0	Nucleo_LCD.elf
+Finished building: default.size.stdout
+ 
+Finished building: Nucleo_LCD.bin
+ 
+Finished building: Nucleo_LCD.list
+ 
+21:45:09 **** Incremental Build of configuration Debug for project Nucleo_LCD ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ -o "Nucleo_LCD.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\diego\Desktop\SeniorDesign\SeniorDesign\Nucleo_LCD\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Nucleo_LCD.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Nucleo_LCD.elf
+ 
+arm-none-eabi-size   Nucleo_LCD.elf 
+arm-none-eabi-objdump -h -S  Nucleo_LCD.elf  > "Nucleo_LCD.list"
+arm-none-eabi-objcopy  -O binary  Nucleo_LCD.elf  "Nucleo_LCD.bin"
+   text	   data	    bss	    dec	    hex	filename
+  18244	    128	   1952	  20324	   4f64	Nucleo_LCD.elf
+Finished building: default.size.stdout
+ 
+Finished building: Nucleo_LCD.bin
+ 
+Finished building: Nucleo_LCD.list
+ 
+21:46:55 **** Incremental Build of configuration Debug for project Nucleo_LCD ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ -o "Nucleo_LCD.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\diego\Desktop\SeniorDesign\SeniorDesign\Nucleo_LCD\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Nucleo_LCD.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Nucleo_LCD.elf
+ 
+arm-none-eabi-size   Nucleo_LCD.elf 
+arm-none-eabi-objdump -h -S  Nucleo_LCD.elf  > "Nucleo_LCD.list"
+arm-none-eabi-objcopy  -O binary  Nucleo_LCD.elf  "Nucleo_LCD.bin"
+   text	   data	    bss	    dec	    hex	filename
+  18212	    128	   1952	  20292	   4f44	Nucleo_LCD.elf
+Finished building: default.size.stdout
+ 
+Finished building: Nucleo_LCD.bin
+ 
+Finished building: Nucleo_LCD.list
+ 
+21:47:49 **** Incremental Build of configuration Debug for project Nucleo_LCD ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ -o "Nucleo_LCD.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\diego\Desktop\SeniorDesign\SeniorDesign\Nucleo_LCD\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Nucleo_LCD.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Nucleo_LCD.elf
+ 
+arm-none-eabi-size   Nucleo_LCD.elf 
+arm-none-eabi-objdump -h -S  Nucleo_LCD.elf  > "Nucleo_LCD.list"
+arm-none-eabi-objcopy  -O binary  Nucleo_LCD.elf  "Nucleo_LCD.bin"
+   text	   data	    bss	    dec	    hex	filename
+  18236	    128	   1952	  20316	   4f5c	Nucleo_LCD.elf
+Finished building: default.size.stdout
+ 
+Finished building: Nucleo_LCD.bin
+ 
+Finished building: Nucleo_LCD.list
+ 
+21:52:38 **** Incremental Build of configuration Debug for project Nucleo_LCD ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ -o "Nucleo_LCD.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\diego\Desktop\SeniorDesign\SeniorDesign\Nucleo_LCD\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Nucleo_LCD.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Nucleo_LCD.elf
+ 
+arm-none-eabi-size   Nucleo_LCD.elf 
+arm-none-eabi-objdump -h -S  Nucleo_LCD.elf  > "Nucleo_LCD.list"
+arm-none-eabi-objcopy  -O binary  Nucleo_LCD.elf  "Nucleo_LCD.bin"
+   text	   data	    bss	    dec	    hex	filename
+  18240	    128	   1952	  20320	   4f60	Nucleo_LCD.elf
+Finished building: default.size.stdout
+ 
+Finished building: Nucleo_LCD.bin
+ 
+Finished building: Nucleo_LCD.list
+ 
+21:53:45 **** Incremental Build of configuration Debug for project Nucleo_LCD ****
+make -j8 all 
+arm-none-eabi-size   Nucleo_LCD.elf 
+   text	   data	    bss	    dec	    hex	filename
+  18240	    128	   1952	  20320	   4f60	Nucleo_LCD.elf
+Finished building: default.size.stdout
+ 
+21:54:39 **** Incremental Build of configuration Debug for project Nucleo_LCD ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ -o "Nucleo_LCD.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\diego\Desktop\SeniorDesign\SeniorDesign\Nucleo_LCD\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Nucleo_LCD.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Nucleo_LCD.elf
+ 
+arm-none-eabi-size   Nucleo_LCD.elf 
+arm-none-eabi-objdump -h -S  Nucleo_LCD.elf  > "Nucleo_LCD.list"
+arm-none-eabi-objcopy  -O binary  Nucleo_LCD.elf  "Nucleo_LCD.bin"
+   text	   data	    bss	    dec	    hex	filename
+  18236	    128	   1952	  20316	   4f5c	Nucleo_LCD.elf
+Finished building: default.size.stdout
+ 
+Finished building: Nucleo_LCD.bin
+ 
+Finished building: Nucleo_LCD.list
+ 
+21:56:00 **** Incremental Build of configuration Debug for project Nucleo_LCD ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ -o "Nucleo_LCD.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\diego\Desktop\SeniorDesign\SeniorDesign\Nucleo_LCD\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Nucleo_LCD.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Nucleo_LCD.elf
+ 
+arm-none-eabi-size   Nucleo_LCD.elf 
+arm-none-eabi-objdump -h -S  Nucleo_LCD.elf  > "Nucleo_LCD.list"
+arm-none-eabi-objcopy  -O binary  Nucleo_LCD.elf  "Nucleo_LCD.bin"
+   text	   data	    bss	    dec	    hex	filename
+  18232	    128	   1952	  20312	   4f58	Nucleo_LCD.elf
+Finished building: default.size.stdout
+ 
+Finished building: Nucleo_LCD.bin
+ 
+Finished building: Nucleo_LCD.list
+ 
+21:59:14 **** Incremental Build of configuration Debug for project Nucleo_LCD ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:87:1: warning: data definition has no type or storage class
+   87 | clear_flag = false;
+      | ^~~~~~~~~~
+../Core/Src/main.c:87:1: warning: type defaults to 'int' in declaration of 'clear_flag' [-Wimplicit-int]
+arm-none-eabi-g++ -o "Nucleo_LCD.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\diego\Desktop\SeniorDesign\SeniorDesign\Nucleo_LCD\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Nucleo_LCD.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Nucleo_LCD.elf
+ 
+arm-none-eabi-size   Nucleo_LCD.elf 
+arm-none-eabi-objdump -h -S  Nucleo_LCD.elf  > "Nucleo_LCD.list"
+arm-none-eabi-objcopy  -O binary  Nucleo_LCD.elf  "Nucleo_LCD.bin"
+   text	   data	    bss	    dec	    hex	filename
+  18272	    128	   1960	  20360	   4f88	Nucleo_LCD.elf
+Finished building: default.size.stdout
+ 
+Finished building: Nucleo_LCD.bin
+ 
+Finished building: Nucleo_LCD.list
+ 
+22:00:20 **** Incremental Build of configuration Debug for project Nucleo_LCD ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ -o "Nucleo_LCD.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\diego\Desktop\SeniorDesign\SeniorDesign\Nucleo_LCD\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Nucleo_LCD.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Nucleo_LCD.elf
+ 
+arm-none-eabi-size   Nucleo_LCD.elf 
+arm-none-eabi-objdump -h -S  Nucleo_LCD.elf  > "Nucleo_LCD.list"
+arm-none-eabi-objcopy  -O binary  Nucleo_LCD.elf  "Nucleo_LCD.bin"
+   text	   data	    bss	    dec	    hex	filename
+  18272	    128	   1952	  20352	   4f80	Nucleo_LCD.elf
+Finished building: default.size.stdout
+ 
+Finished building: Nucleo_LCD.bin
+ 
+Finished building: Nucleo_LCD.list
+ 
+22:02:25 **** Incremental Build of configuration Debug for project Nucleo_LCD ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ -o "Nucleo_LCD.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\diego\Desktop\SeniorDesign\SeniorDesign\Nucleo_LCD\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Nucleo_LCD.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Nucleo_LCD.elf
+ 
+arm-none-eabi-size   Nucleo_LCD.elf 
+arm-none-eabi-objdump -h -S  Nucleo_LCD.elf  > "Nucleo_LCD.list"
+arm-none-eabi-objcopy  -O binary  Nucleo_LCD.elf  "Nucleo_LCD.bin"
+   text	   data	    bss	    dec	    hex	filename
+  18276	    128	   1952	  20356	   4f84	Nucleo_LCD.elf
+Finished building: default.size.stdout
+ 
+Finished building: Nucleo_LCD.bin
+ 
+Finished building: Nucleo_LCD.list
+ 
